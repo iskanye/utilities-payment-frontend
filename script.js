@@ -1,6 +1,6 @@
 // ===== ГЛОБАЛЬНЫЕ НАСТРОЙКИ =====
 
-let API_BASE = "http://localhost:8080";
+let API_BASE = "api-gateway:8080";
 let authToken = null;
 
 const apiBaseInput = document.getElementById("apiBase");
