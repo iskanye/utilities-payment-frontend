@@ -76,7 +76,7 @@ async function apiRequest(path, options = {}, requireAuth = true) {
     };
 
     if (options.body !== undefined && options.body !== null) {
-        fetchOptions.body = new URLSearchParams(options.body);
+        fetchOptions.body = new URLSearchParams(options.body).toString();
     }
 
     log(`→ ${fetchOptions.method} ${url}`, options.body);
@@ -159,7 +159,6 @@ function renderUsersTable(containerId, users) {
             <td>${u.ID ?? u.id ?? ""}</td>
             <td>${u.Email ?? u.email ?? ""}</td>
             <td>${u.IsAdmin ?? u.is_admin ? "Да" : "Нет"}</td>
-            <td>${u.PassHash ?? u.pass_hash ?? ""}</td>
         </tr>
     `
         )
@@ -172,7 +171,6 @@ function renderUsersTable(containerId, users) {
                     <th>ID</th>
                     <th>Email</th>
                     <th>Админ</th>
-                    <th>Хеш пароля</th>
                 </tr>
             </thead>
             <tbody>
