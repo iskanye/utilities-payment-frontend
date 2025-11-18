@@ -1,67 +1,155 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Utilities Payment - Frontend</title>
-  <link rel="stylesheet" href="assets/styles.css" />
-  <meta name="description" content="Simple frontend to interact with utilities-payment API (urlencoded)." />
+    <meta charset="UTF-8">
+    <title>Оплата коммунальных услуг</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Utilities Payment — Demo Frontend</h1>
+<header class="app-header">
+    <h1>Сервис оплаты ЖКХ</h1>
+    <p class="subtitle">Фронтенд для API <code>utilities-payment</code></p>
+</header>
 
-    <section class="card" id="auth">
-      <h2>Auth</h2>
-      <form id="registerForm">
-        <h3>Register</h3>
-        <input name="email" placeholder="email@example.test" required />
-        <input name="password" placeholder="password" type="password" required />
-        <button type="submit">Register</button>
-      </form>
-
-      <form id="loginForm">
-        <h3>Login</h3>
-        <input name="email" placeholder="email@example.test" required />
-        <input name="password" placeholder="password" type="password" required />
-        <button type="submit">Login</button>
-      </form>
-
-      <div class="row">
-        <button id="logoutBtn">Logout</button>
-        <button id="whoamiBtn">Admin Users</button>
-      </div>
+<main class="container">
+    <section class="card">
+        <h2>Настройки подключения</h2>
+        <div class="inline-form">
+            <label for="apiBase">Базовый URL API:</label>
+            <input id="apiBase" type="text" value="http://localhost:8080">
+            <button id="saveBaseUrl">Сохранить</button>
+        </div>
+        <p class="hint">
+            По умолчанию используется <code>http://localhost:8080</code> (как в README).
+        </p>
     </section>
 
-    <section class="card" id="bills">
-      <h2>Bills</h2>
-      <div class="row">
-        <button id="listBillsBtn">List My Bills</button>
-        <input id="billIdInput" placeholder="Bill ID" />
-        <button id="getBillBtn">Get Bill</button>
-      </div>
+    <section class="card">
+        <h2>Аутентификация</h2>
 
-      <form id="payForm">
-        <h3>Pay Bill</h3>
-        <input name="id" placeholder="bill id" required />
-        <button type="submit">Pay</button>
-      </form>
+        <div class="two-columns">
+            <div>
+                <h3>Регистрация</h3>
+                <form id="registerForm" class="form">
+                    <label>
+                        Email
+                        <input type="email" name="email" required>
+                    </label>
+                    <label>
+                        Пароль
+                        <input type="password" name="password" required>
+                    </label>
+                    <button type="submit">Зарегистрировать</button>
+                </form>
+            </div>
 
-      <form id="createBillForm">
-        <h3>Create Bill (admin)</h3>
-        <input name="address" placeholder="Address" required />
-        <input name="amount" placeholder="Amount" required />
-        <input name="user_id" placeholder="User ID" required />
-        <button type="submit">Create</button>
-      </form>
+            <div>
+                <h3>Вход</h3>
+                <form id="loginForm" class="form">
+                    <label>
+                        Email
+                        <input type="email" name="email" required>
+                    </label>
+                    <label>
+                        Пароль
+                        <input type="password" name="password" required>
+                    </label>
+                    <button type="submit">Войти</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="auth-status">
+            <div>
+                <span class="status-label">Статус:</span>
+                <span id="authStatusText">не авторизован</span>
+            </div>
+            <div>
+                <span class="status-label">Токен:</span>
+                <code id="tokenPreview">—</code>
+            </div>
+            <button id="logoutBtn" class="danger" disabled>Выйти (/users/logout)</button>
+        </div>
     </section>
 
-    <section class="card" id="output">
-      <h2>Output</h2>
-      <pre id="log"></pre>
-    </section>
-  </div>
+    <section class="card">
+        <h2>Счета</h2>
+        <div class="two-columns">
+            <div>
+                <h3>Мои счета (/bills)</h3>
+                <button id="loadBillsBtn">Загрузить все счета</button>
+                <div id="billsList" class="table-wrapper"></div>
+            </div>
 
-  <script src="assets/app.js"></script>
+            <div>
+                <h3>Поиск и оплата</h3>
+                <form id="getBillForm" class="form-inline">
+                    <label>
+                        ID счёта
+                        <input type="number" name="id" min="1" required>
+                    </label>
+                    <button type="submit">Получить счёт по ID (/bills/{id})</button>
+                </form>
+
+                <div id="singleBill" class="table-wrapper"></div>
+
+                <form id="payBillForm" class="form-inline">
+                    <label>
+                        ID счёта для оплаты
+                        <input type="number" name="id" min="1" required>
+                    </label>
+                    <button type="submit">Оплатить (/bills/pay)</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>Админ-панель</h2>
+        <p class="hint">
+            Доступно только для пользователей, у которых на бэкенде установлен <code>IsAdmin = true</code>.
+            Если вы не админ, запросы вернут ошибку.
+        </p>
+
+        <div class="two-columns">
+            <div>
+                <h3>Выставить счёт (/admin/bills)</h3>
+                <form id="createBillForm" class="form">
+                    <label>
+                        Адрес
+                        <input type="text" name="address" required placeholder="г. Москва, ул. Пушкина, д. 1">
+                    </label>
+                    <label>
+                        Сумма
+                        <input type="number" name="amount" step="0.01" min="0" required>
+                    </label>
+                    <label>
+                        ID пользователя
+                        <input type="number" name="user_id" min="1" required>
+                    </label>
+                    <button type="submit">Создать счёт</button>
+                </form>
+            </div>
+
+            <div>
+                <h3>Список пользователей (/admin/users)</h3>
+                <button id="loadUsersBtn">Загрузить пользователей</button>
+                <div id="usersList" class="table-wrapper"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>Логи / ответы сервера</h2>
+        <pre id="logOutput" class="log"></pre>
+        <button id="clearLogBtn" class="secondary">Очистить лог</button>
+    </section>
+</main>
+
+<footer class="app-footer">
+    <p>Фронтенд для микросервисного приложения оплаты ЖКХ (utilities-payment).</p>
+</footer>
+
+<script src="script.js"></script>
 </body>
 </html>
