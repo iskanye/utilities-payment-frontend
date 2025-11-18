@@ -1,6 +1,6 @@
 // ===== ГЛОБАЛЬНЫЕ НАСТРОЙКИ =====
 
-let API_BASE = "api-gateway:8080";
+let API_BASE = "http://localhost:8080";
 let authToken = null;
 
 const apiBaseInput = document.getElementById("apiBase");
@@ -64,7 +64,7 @@ function setBaseUrl(url) {
 async function apiRequest(path, options = {}, requireAuth = true) {
     const url = API_BASE + path;
     const headers = options.headers || {};
-    headers["Content-Type"] = "application/json";
+    headers["Content-Type"] = "application/x-www-form-urlencoded";
 
     if (requireAuth && authToken) {
         headers["Authorization"] = "Bearer " + authToken;
@@ -76,7 +76,7 @@ async function apiRequest(path, options = {}, requireAuth = true) {
     };
 
     if (options.body !== undefined && options.body !== null) {
-        fetchOptions.body = JSON.stringify(options.body);
+        fetchOptions.body = new URLSearchParams(options.body);
     }
 
     log(`→ ${fetchOptions.method} ${url}`, options.body);
@@ -92,7 +92,7 @@ async function apiRequest(path, options = {}, requireAuth = true) {
     }
 
     if (!response.ok) {
-        log(`✖ Ошибка ${response.status} ${response.statusText}`, data);
+        log(`Ошибка ${response.status} ${response.statusText}`, data);
         throw new Error(
             typeof data === "object" && data && data.err
                 ? data.err
@@ -100,7 +100,7 @@ async function apiRequest(path, options = {}, requireAuth = true) {
         );
     }
 
-    log(`✔ Успешный ответ от ${path}`, data);
+    log(`Успешный ответ от ${path}`, data);
     return data;
 }
 
