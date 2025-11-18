@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Utilities Payment - Frontend</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+  <meta name="description" content="Simple frontend to interact with utilities-payment API (urlencoded)." />
+</head>
+<body>
+  <div class="container">
+    <h1>Utilities Payment — Demo Frontend</h1>
+
+    <section class="card" id="auth">
+      <h2>Auth</h2>
+      <form id="registerForm">
+        <h3>Register</h3>
+        <input name="email" placeholder="email@example.test" required />
+        <input name="password" placeholder="password" type="password" required />
+        <button type="submit">Register</button>
+      </form>
+
+      <form id="loginForm">
+        <h3>Login</h3>
+        <input name="email" placeholder="email@example.test" required />
+        <input name="password" placeholder="password" type="password" required />
+        <button type="submit">Login</button>
+      </form>
+
+      <div class="row">
+        <button id="logoutBtn">Logout</button>
+        <button id="whoamiBtn">Admin Users</button>
+      </div>
+    </section>
+
+    <section class="card" id="bills">
+      <h2>Bills</h2>
+      <div class="row">
+        <button id="listBillsBtn">List My Bills</button>
+        <input id="billIdInput" placeholder="Bill ID" />
+        <button id="getBillBtn">Get Bill</button>
+      </div>
+
+      <form id="payForm">
+        <h3>Pay Bill</h3>
+        <input name="id" placeholder="bill id" required />
+        <button type="submit">Pay</button>
+      </form>
+
+      <form id="createBillForm">
+        <h3>Create Bill (admin)</h3>
+        <input name="address" placeholder="Address" required />
+        <input name="amount" placeholder="Amount" required />
+        <input name="user_id" placeholder="User ID" required />
+        <button type="submit">Create</button>
+      </form>
+    </section>
+
+    <section class="card" id="output">
+      <h2>Output</h2>
+      <pre id="log"></pre>
+    </section>
+  </div>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>
