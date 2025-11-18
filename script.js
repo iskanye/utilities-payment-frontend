@@ -287,8 +287,8 @@ document.addEventListener("DOMContentLoaded", () => {
         .getElementById("loadBillsBtn")
         .addEventListener("click", async () => {
             try {
-                const data = await apiRequest("/bills/", {}, true);
-                const bills = Array.isArray(data) ? data : [data];
+                const data = await apiRequest("/bills", {}, true);
+                const bills = Array.isArray(data.bills) ? data.bills : [data.bills];
                 renderBillsTable("billsList", bills);
             } catch (err) {
                 alert("Ошибка загрузки счетов: " + err.message);
@@ -327,7 +327,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     },
                     true
                 );
-                alert("Счёт оплачен (если был корректный ID и статус).");
+                alert("Счёт оплачен");
             } catch (err) {
                 alert("Ошибка оплаты: " + err.message);
             }
