@@ -2,16 +2,43 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Оплата коммунальных услуг</title>
+    <title>Оплата коммунальных услуг - Главная</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <header class="app-header">
-    <h1>Сервис оплаты ЖКХ</h1>
-    <p class="subtitle">Фронтенд для API <code>utilities-payment</code></p>
+    <div class="header-content">
+        <h1>Сервис оплаты ЖКХ</h1>
+        <p class="subtitle">Фронтенд для API <code>utilities-payment</code></p>
+    </div>
+    <nav class="main-nav">
+        <a href="index.html" class="nav-link active">Главная</a>
+        <a href="auth.html" class="nav-link">Аутентификация</a>
+        <a href="bills.html" class="nav-link">Счета</a>
+        <a href="admin.html" class="nav-link">Админ-панель</a>
+    </nav>
+    <div class="auth-status-header">
+        <div class="auth-status-item">
+            <span class="status-label">Статус:</span>
+            <span id="authStatusText">не авторизован</span>
+        </div>
+        <div class="auth-status-item">
+            <span class="status-label">Токен:</span>
+            <code id="tokenPreview">—</code>
+        </div>
+        <button id="logoutBtn" class="danger" disabled>Выйти</button>
+    </div>
 </header>
 
 <main class="container">
+    <section class="card welcome-card">
+        <h2>Добро пожаловать в сервис оплаты ЖКХ</h2>
+        <p class="welcome-text">
+            Это фронтенд-приложение для работы с API микросервисного приложения оплаты коммунальных услуг.
+            Вы можете управлять своими счетами, производить оплату и администрировать систему.
+        </p>
+    </section>
+
     <section class="card">
         <h2>Настройки подключения</h2>
         <div class="inline-form">
@@ -24,118 +51,25 @@
         </p>
     </section>
 
-    <section class="card">
-        <h2>Аутентификация</h2>
-
-        <div class="two-columns">
-            <div>
-                <h3>Регистрация</h3>
-                <form id="registerForm" class="form">
-                    <label>
-                        Email
-                        <input type="email" name="email" required>
-                    </label>
-                    <label>
-                        Пароль
-                        <input type="password" name="password" required>
-                    </label>
-                    <button type="submit">Зарегистрировать</button>
-                </form>
-            </div>
-
-            <div>
-                <h3>Вход</h3>
-                <form id="loginForm" class="form">
-                    <label>
-                        Email
-                        <input type="email" name="email" required>
-                    </label>
-                    <label>
-                        Пароль
-                        <input type="password" name="password" required>
-                    </label>
-                    <button type="submit">Войти</button>
-                </form>
-            </div>
-        </div>
-
-        <div class="auth-status">
-            <div>
-                <span class="status-label">Статус:</span>
-                <span id="authStatusText">не авторизован</span>
-            </div>
-            <div>
-                <span class="status-label">Токен:</span>
-                <code id="tokenPreview">—</code>
-            </div>
-            <button id="logoutBtn" class="danger" disabled>Выйти (/users/logout)</button>
-        </div>
-    </section>
 
     <section class="card">
-        <h2>Счета</h2>
-        <div class="two-columns">
-            <div>
-                <h3>Мои счета (/bills)</h3>
-                <button id="loadBillsBtn">Загрузить все счета</button>
-                <div id="billsList" class="table-wrapper"></div>
-            </div>
-
-            <div>
-                <h3>Поиск и оплата</h3>
-                <form id="getBillForm" class="form-inline">
-                    <label>
-                        ID счёта
-                        <input type="number" name="id" min="1" required>
-                    </label>
-                    <button type="submit">Получить счёт по ID (/bills/{id})</button>
-                </form>
-
-                <div id="singleBill" class="table-wrapper"></div>
-
-                <form id="payBillForm" class="form-inline">
-                    <label>
-                        ID счёта для оплаты
-                        <input type="number" name="id" min="1" required>
-                    </label>
-                    <button type="submit">Оплатить (/bills/pay)</button>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <section class="card">
-        <h2>Админ-панель</h2>
-        <p class="hint">
-            Доступно только для пользователей, у которых на бэкенде установлен <code>IsAdmin = true</code>.
-            Если вы не админ, запросы вернут ошибку.
-        </p>
-
-        <div class="two-columns">
-            <div>
-                <h3>Выставить счёт (/admin/bills)</h3>
-                <form id="createBillForm" class="form">
-                    <label>
-                        Адрес
-                        <input type="text" name="address" required placeholder="г. Москва, ул. Пушкина, д. 1">
-                    </label>
-                    <label>
-                        Сумма
-                        <input type="number" name="amount" step="0.01" min="0" required>
-                    </label>
-                    <label>
-                        ID пользователя
-                        <input type="number" name="user_id" min="1" required>
-                    </label>
-                    <button type="submit">Создать счёт</button>
-                </form>
-            </div>
-
-            <div>
-                <h3>Список пользователей (/admin/users)</h3>
-                <button id="loadUsersBtn">Загрузить пользователей</button>
-                <div id="usersList" class="table-wrapper"></div>
-            </div>
+        <h2>Быстрый доступ</h2>
+        <div class="quick-links">
+            <a href="auth.html" class="quick-link">
+                <div class="quick-link-icon">🔐</div>
+                <div class="quick-link-title">Аутентификация</div>
+                <div class="quick-link-desc">Вход и регистрация</div>
+            </a>
+            <a href="bills.html" class="quick-link">
+                <div class="quick-link-icon">📄</div>
+                <div class="quick-link-title">Счета</div>
+                <div class="quick-link-desc">Просмотр и оплата счетов</div>
+            </a>
+            <a href="admin.html" class="quick-link">
+                <div class="quick-link-icon">⚙️</div>
+                <div class="quick-link-title">Админ-панель</div>
+                <div class="quick-link-desc">Управление системой</div>
+            </a>
         </div>
     </section>
 

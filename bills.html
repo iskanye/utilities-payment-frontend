@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Счета - Оплата ЖКХ</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="app-header">
+    <div class="header-content">
+        <h1>Сервис оплаты ЖКХ</h1>
+        <p class="subtitle">Фронтенд для API <code>utilities-payment</code></p>
+    </div>
+    <nav class="main-nav">
+        <a href="index.html" class="nav-link">Главная</a>
+        <a href="auth.html" class="nav-link">Аутентификация</a>
+        <a href="bills.html" class="nav-link active">Счета</a>
+        <a href="admin.html" class="nav-link">Админ-панель</a>
+    </nav>
+    <div class="auth-status-header">
+        <div class="auth-status-item">
+            <span class="status-label">Статус:</span>
+            <span id="authStatusText">не авторизован</span>
+        </div>
+        <div class="auth-status-item">
+            <span class="status-label">Токен:</span>
+            <code id="tokenPreview">—</code>
+        </div>
+        <button id="logoutBtn" class="danger" disabled>Выйти</button>
+    </div>
+</header>
+
+<main class="container">
+    <section class="card">
+        <h2>Счета</h2>
+        <p class="hint">
+            Просматривайте и оплачивайте свои счета за коммунальные услуги.
+        </p>
+
+        <div class="two-columns">
+            <div>
+                <h3>Мои счета</h3>
+                <button id="loadBillsBtn">Загрузить все счета</button>
+                <div id="billsList" class="table-wrapper"></div>
+            </div>
+
+            <div>
+                <h3>Поиск и оплата</h3>
+                <form id="getBillForm" class="form-inline">
+                    <label>
+                        ID счёта
+                        <input type="number" name="id" min="1" required placeholder="Введите ID">
+                    </label>
+                    <button type="submit">Получить счёт по ID</button>
+                </form>
+
+                <div id="singleBill" class="table-wrapper"></div>
+
+                <form id="payBillForm" class="form-inline">
+                    <label>
+                        ID счёта для оплаты
+                        <input type="number" name="id" min="1" required placeholder="Введите ID">
+                    </label>
+                    <button type="submit">Оплатить</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="card">
+        <h2>Информация</h2>
+        <div class="info-box">
+            <h3>📋 Мои счета</h3>
+            <p>Нажмите "Загрузить все счета", чтобы увидеть список всех ваших счетов за коммунальные услуги.</p>
+            
+            <h3>🔍 Поиск счёта</h3>
+            <p>Введите ID счёта, чтобы найти конкретный счёт и просмотреть его детали.</p>
+            
+            <h3>💳 Оплата</h3>
+            <p>Введите ID счёта, который хотите оплатить, и нажмите кнопку "Оплатить". Убедитесь, что у вас достаточно средств.</p>
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>Логи / ответы сервера</h2>
+        <pre id="logOutput" class="log"></pre>
+        <button id="clearLogBtn" class="secondary">Очистить лог</button>
+    </section>
+</main>
+
+<footer class="app-footer">
+    <p>Фронтенд для микросервисного приложения оплаты ЖКХ (utilities-payment).</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

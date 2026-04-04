@@ -18,6 +18,10 @@ body {
     background: linear-gradient(135deg, #1d4ed8, #3b82f6);
 }
 
+.header-content {
+    margin-bottom: 16px;
+}
+
 .app-header h1 {
     margin: 0 0 4px;
     font-size: 24px;
@@ -26,6 +30,87 @@ body {
 .app-header .subtitle {
     margin: 0;
     opacity: 0.9;
+}
+
+/* Navigation */
+.main-nav {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Auth Status in Header */
+.auth-status-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+    padding-top: 12px;
+    margin-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    font-size: 13px;
+}
+
+.auth-status-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.auth-status-header .status-label {
+    font-weight: 600;
+    opacity: 0.9;
+}
+
+.auth-status-header #authStatusText {
+    font-weight: 600;
+}
+
+.auth-status-header #authStatusText.ok {
+    color: #86efac;
+}
+
+.auth-status-header #authStatusText.bad {
+    color: #fca5a5;
+}
+
+.auth-status-header #tokenPreview {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 11px;
+    word-break: break-all;
+    max-width: 200px;
+}
+
+.auth-status-header button {
+    padding: 6px 12px;
+    font-size: 12px;
+    background: rgba(220, 38, 38, 0.9);
+}
+
+.auth-status-header button:hover:not(:disabled) {
+    background: rgba(185, 28, 28, 0.9);
+}
+
+.nav-link {
+    padding: 8px 16px;
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background 0.15s, color 0.15s;
+    font-size: 14px;
+}
+
+.nav-link:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+}
+
+.nav-link.active {
+    background: rgba(255, 255, 255, 0.25);
+    color: white;
+    font-weight: 600;
 }
 
 .container {
@@ -236,4 +321,144 @@ th {
     color: #6b7280;
     font-size: 13px;
     text-align: center;
+}
+
+/* Welcome Card */
+.welcome-card {
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    color: white;
+}
+
+.welcome-card h2 {
+    color: white;
+}
+
+.welcome-text {
+    font-size: 15px;
+    line-height: 1.6;
+    opacity: 0.95;
+}
+
+/* Quick Links */
+.quick-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-top: 12px;
+}
+
+.quick-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    text-decoration: none;
+    color: #111827;
+    transition: all 0.15s;
+    background: #f9fafb;
+}
+
+.quick-link:hover {
+    border-color: #2563eb;
+    background: white;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+    transform: translateY(-2px);
+}
+
+.quick-link-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+}
+
+.quick-link-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.quick-link-desc {
+    font-size: 13px;
+    color: #6b7280;
+    text-align: center;
+}
+
+/* Info Box */
+.info-box {
+    background: #f9fafb;
+    border-radius: 8px;
+    padding: 16px;
+}
+
+.info-box h3 {
+    margin-top: 16px;
+    margin-bottom: 8px;
+    font-size: 15px;
+    color: #1f2937;
+}
+
+.info-box h3:first-child {
+    margin-top: 0;
+}
+
+.info-box p {
+    margin: 0 0 12px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #4b5563;
+}
+
+.info-box p:last-child {
+    margin-bottom: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .app-header {
+        padding: 16px 20px;
+    }
+    
+    .app-header h1 {
+        font-size: 20px;
+    }
+    
+    .main-nav {
+        gap: 4px;
+    }
+    
+    .nav-link {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+    
+    .auth-status-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    
+    .auth-status-header #tokenPreview {
+        max-width: 100%;
+    }
+    
+    .auth-status-header button {
+        width: 100%;
+    }
+    
+    .container {
+        padding: 0 12px 24px;
+    }
+    
+    .card {
+        padding: 14px 16px 16px;
+    }
+    
+    .two-columns {
+        grid-template-columns: 1fr;
+    }
+    
+    .quick-links {
+        grid-template-columns: 1fr;
+    }
 }

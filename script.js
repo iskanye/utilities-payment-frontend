@@ -3,13 +3,12 @@
 let API_BASE = "http://localhost:8080";
 let authToken = null;
 
-const apiBaseInput = document.getElementById("apiBase");
-const saveBaseUrlBtn = document.getElementById("saveBaseUrl");
-
 // ===== УТИЛИТЫ =====
 
 function log(message, data) {
     const logOutput = document.getElementById("logOutput");
+    if (!logOutput) return;
+    
     const time = new Date().toLocaleTimeString();
     let line = `[${time}] ${message}`;
     if (data !== undefined) {
@@ -26,6 +25,8 @@ function updateAuthUI() {
     const statusEl = document.getElementById("authStatusText");
     const tokenEl = document.getElementById("tokenPreview");
     const logoutBtn = document.getElementById("logoutBtn");
+
+    if (!statusEl || !tokenEl || !logoutBtn) return;
 
     if (authToken) {
         statusEl.textContent = "авторизован";
@@ -56,7 +57,12 @@ function setToken(token) {
 function setBaseUrl(url) {
     API_BASE = url.replace(/\/+$/, ""); // убрать хвостовые /
     localStorage.setItem("utilities_api_base", API_BASE);
-    apiBaseInput.value = API_BASE;
+    
+    const apiBaseInput = document.getElementById("apiBase");
+    if (apiBaseInput) {
+        apiBaseInput.value = API_BASE;
+    }
+    
     log("Базовый URL API обновлён", API_BASE);
 }
 
@@ -108,6 +114,8 @@ async function apiRequest(path, options = {}, requireAuth = true) {
 
 function renderBillsTable(containerId, bills) {
     const container = document.getElementById(containerId);
+    if (!container) return;
+    
     if (!bills || bills.length === 0) {
         container.innerHTML = '<p class="hint">Нет данных.</p>';
         return;
@@ -147,6 +155,8 @@ function renderBillsTable(containerId, bills) {
 
 function renderUsersTable(containerId, users) {
     const container = document.getElementById(containerId);
+    if (!container) return;
+    
     if (!users || users.length === 0) {
         container.innerHTML = '<p class="hint">Нет данных.</p>';
         return;
@@ -187,7 +197,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const savedBase = localStorage.getItem("utilities_api_base");
     if (savedBase) {
         API_BASE = savedBase;
-        apiBaseInput.value = savedBase;
+        const apiBaseInput = document.getElementById("apiBase");
+        if (apiBaseInput) {
+            apiBaseInput.value = savedBase;
+        }
     }
 
     // восстановить токен
@@ -198,16 +211,22 @@ document.addEventListener("DOMContentLoaded", () => {
     updateAuthUI();
 
     // смена базового URL
-    saveBaseUrlBtn.addEventListener("click", () => {
-        const url = apiBaseInput.value.trim();
-        if (!url) return;
-        setBaseUrl(url);
-    });
+    const saveBaseUrlBtn = document.getElementById("saveBaseUrl");
+    if (saveBaseUrlBtn) {
+        saveBaseUrlBtn.addEventListener("click", () => {
+            const apiBaseInput = document.getElementById("apiBase");
+            if (!apiBaseInput) return;
+            
+            const url = apiBaseInput.value.trim();
+            if (!url) return;
+            setBaseUrl(url);
+        });
+    }
 
     // регистрация
-    document
-        .getElementById("registerForm")
-        .addEventListener("submit", async (e) => {
+    const registerForm = document.getElementById("registerForm");
+    if (registerForm) {
+        registerForm.addEventListener("submit", async (e) => {
             e.preventDefault();
             const form = e.target;
             const email = form.email.value.trim();
@@ -231,61 +250,68 @@ document.addEventListener("DOMContentLoaded", () => {
                 alert("Ошибка регистрации: " + err.message);
             }
         });
+    }
 
     // вход
-    document.getElementById("loginForm").addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const form = e.target;
-        const email = form.email.value.trim();
-        const password = form.password.value;
+    const loginForm = document.getElementById("loginForm");
+    if (loginForm) {
+        loginForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const form = e.target;
+            const email = form.email.value.trim();
+            const password = form.password.value;
 
-        try {
-            const data = await apiRequest(
-                "/users/login",
-                {
-                    method: "POST",
-                    body: { email, password },
-                },
-                false
-            );
+            try {
+                const data = await apiRequest(
+                    "/users/login",
+                    {
+                        method: "POST",
+                        body: { email, password },
+                    },
+                    false
+                );
 
-            const token = data.token || data.Token;
-            if (!token) {
-                throw new Error("В ответе нет поля token");
+                const token = data.token || data.Token;
+                if (!token) {
+                    throw new Error("В ответе нет поля token");
+                }
+
+                setToken(token);
+                alert("Успешный вход в систему.");
+            } catch (err) {
+                alert("Ошибка входа: " + err.message);
             }
-
-            setToken(token);
-            alert("Успешный вход в систему.");
-        } catch (err) {
-            alert("Ошибка входа: " + err.message);
-        }
-    });
+        });
+    }
 
     // выход
-    document.getElementById("logoutBtn").addEventListener("click", async () => {
-        if (!authToken) return;
+    const logoutBtn = document.getElementById("logoutBtn");
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", async () => {
+            if (!authToken) return;
 
-        try {
-            await apiRequest(
-                "/users/logout",
-                {
-                    method: "POST",
-                    body: {},
-                },
-                true
-            );
+            try {
+                await apiRequest(
+                    "/users/logout",
+                    {
+                        method: "POST",
+                        body: {},
+                    },
+                    true
+                );
 
-            setToken(null);
-            alert("Вы вышли из системы.");
-        } catch (err) {
-            alert("Ошибка выхода: " + err.message);
-        }
-    });
+                setToken(null);
+                alert("Вы вышли из системы.");
+            } catch (err) {
+                alert("Ошибка выхода: " + err.message);
+            }
+        });
+    }
 
     // получить все счета текущего пользователя
-    document
-        .getElementById("loadBillsBtn")
-        .addEventListener("click", async () => {
+    const loadBillsBtn = document.getElementById("loadBillsBtn");
+    if (loadBillsBtn) {
+        loadBillsBtn.addEventListener("click", async () => {
             try {
                 const data = await apiRequest("/bills", {}, true);
                 const bills = Array.isArray(data.bills) ? data.bills : [data.bills];
@@ -294,11 +320,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 alert("Ошибка загрузки счетов: " + err.message);
             }
         });
+    }
 
     // получить конкретный счёт по ID
-    document
-        .getElementById("getBillForm")
-        .addEventListener("submit", async (e) => {
+    const getBillForm = document.getElementById("getBillForm");
+    if (getBillForm) {
+        getBillForm.addEventListener("submit", async (e) => {
             e.preventDefault();
             const id = e.target.id.value;
 
@@ -310,11 +337,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 alert("Ошибка получения счёта: " + err.message);
             }
         });
+    }
 
     // оплатить счёт
-    document
-        .getElementById("payBillForm")
-        .addEventListener("submit", async (e) => {
+    const payBillForm = document.getElementById("payBillForm");
+    if (payBillForm) {
+        payBillForm.addEventListener("submit", async (e) => {
             e.preventDefault();
             const id = Number(e.target.id.value);
 
@@ -332,11 +360,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 alert("Ошибка оплаты: " + err.message);
             }
         });
+    }
 
     // админ: создать счёт
-    document
-        .getElementById("createBillForm")
-        .addEventListener("submit", async (e) => {
+    const createBillForm = document.getElementById("createBillForm");
+    if (createBillForm) {
+        createBillForm.addEventListener("submit", async (e) => {
             e.preventDefault();
             const form = e.target;
 
@@ -358,11 +387,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 alert("Ошибка создания счёта: " + err.message);
             }
         });
+    }
 
     // админ: список пользователей
-    document
-        .getElementById("loadUsersBtn")
-        .addEventListener("click", async () => {
+    const loadUsersBtn = document.getElementById("loadUsersBtn");
+    if (loadUsersBtn) {
+        loadUsersBtn.addEventListener("click", async () => {
             try {
                 const data = await apiRequest("/admin/users", {}, true);
                 const users = Array.isArray(data) ? data : [data];
@@ -371,9 +401,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 alert("Ошибка загрузки пользователей: " + err.message);
             }
         });
+    }
 
     // очистка лога
-    document.getElementById("clearLogBtn").addEventListener("click", () => {
-        document.getElementById("logOutput").textContent = "";
-    });
+    const clearLogBtn = document.getElementById("clearLogBtn");
+    if (clearLogBtn) {
+        clearLogBtn.addEventListener("click", () => {
+            const logOutput = document.getElementById("logOutput");
+            if (logOutput) {
+                logOutput.textContent = "";
+            }
+        });
+    }
 });
