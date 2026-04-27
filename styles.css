@@ -41,57 +41,6 @@ body {
     border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* Auth Status in Header */
-.auth-status-header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 16px;
-    padding-top: 12px;
-    margin-top: 12px;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-    font-size: 13px;
-}
-
-.auth-status-item {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-}
-
-.auth-status-header .status-label {
-    font-weight: 600;
-    opacity: 0.9;
-}
-
-.auth-status-header #authStatusText {
-    font-weight: 600;
-}
-
-.auth-status-header #authStatusText.ok {
-    color: #86efac;
-}
-
-.auth-status-header #authStatusText.bad {
-    color: #fca5a5;
-}
-
-.auth-status-header #tokenPreview {
-    color: rgba(255, 255, 255, 0.85);
-    font-size: 11px;
-    word-break: break-all;
-    max-width: 200px;
-}
-
-.auth-status-header button {
-    padding: 6px 12px;
-    font-size: 12px;
-    background: rgba(220, 38, 38, 0.9);
-}
-
-.auth-status-header button:hover:not(:disabled) {
-    background: rgba(185, 28, 28, 0.9);
-}
 
 .nav-link {
     padding: 8px 16px;
@@ -323,6 +272,26 @@ th {
     text-align: center;
 }
 
+.auth-status-footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+    font-size: 13px;
+}
+
+.auth-status-footer #authStatusText.ok  { color: #16a34a; font-weight: 600; }
+.auth-status-footer #authStatusText.bad { color: #dc2626; font-weight: 600; }
+
+.auth-status-footer #tokenPreview {
+    color: #4b5563;
+    font-size: 12px;
+    word-break: break-all;
+    max-width: 260px;
+}
+
 /* Welcome Card */
 .welcome-card {
     background: linear-gradient(135deg, #3b82f6, #1d4ed8);
@@ -430,20 +399,6 @@ th {
     .nav-link {
         padding: 6px 12px;
         font-size: 13px;
-    }
-    
-    .auth-status-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-    }
-    
-    .auth-status-header #tokenPreview {
-        max-width: 100%;
-    }
-    
-    .auth-status-header button {
-        width: 100%;
     }
     
     .container {
