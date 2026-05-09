@@ -1,43 +1,62 @@
-name: Deploy to Public Pages Repository
+name: 'Deploy frontend to server'
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   workflow_dispatch:
+
+concurrency:
+  group: deploy-frontend
+  cancel-in-progress: false
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        
+      - name: Checkout
+        uses: actions/checkout@v5
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-            node-version: '>=22.12'
-            cache: 'npm'
+          node-version: '>=22.12'
+          cache: 'npm'
 
       - name: Install dependencies
-        run: npm install
-  
-      - name: Fix permissions
-        run: chmod +x node_modules/.bin/vite || true
+        run: npm ci
 
-      - name: Build project
+      - name: Build
         run: npm run build
-        env:
-          VITE_BACKEND_ENDPOINT: ${{ vars.VITE_BACKEND_ENDPOINT }}
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          personal_token: ${{ secrets.PUBLIC_PAGES_TOKEN }}
-          external_repository: ${{ secrets.PUBLIC_PAGES_REPO }}
-          publish_dir: ./dist
-          publish_branch: ${{ secrets.PUBLIC_PAGES_BRANCH || 'main' }}
-          user_name: 'github-actions[bot]'
-          user_email: 'github-actions[bot]@users.noreply.github.com'
-          commit_message: 'deploy: update build'
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -p "${{ secrets.SSH_PORT || 22 }}" -H "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Sync dist to server
+        run: |
+          rsync -az --delete \
+            -e "ssh -p ${{ secrets.SSH_PORT || 22 }}" \
+            ./dist/ \
+            "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.FRONTEND_PATH }}/"
+
+      - name: Upload nginx config
+        run: |
+          scp -P "${{ secrets.SSH_PORT || 22 }}" \
+            ./nginx.conf \
+            "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/tmp/utilities-payment.nginx.conf"
+
+      - name: Install nginx config and reload
+        run: |
+          ssh -p "${{ secrets.SSH_PORT || 22 }}" \
+            "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}" \
+            "set -e; \
+             sudo install -m 644 /tmp/utilities-payment.nginx.conf /etc/nginx/sites-available/utilities-payment; \
+             sudo ln -sf /etc/nginx/sites-available/utilities-payment /etc/nginx/sites-enabled/utilities-payment; \
+             sudo rm -f /etc/nginx/sites-enabled/default; \
+             sudo nginx -t; \
+             sudo systemctl reload nginx; \
+             rm -f /tmp/utilities-payment.nginx.conf"
