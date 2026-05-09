@@ -1,47 +1,14 @@
 import { initRouter } from "./router.js";
 import { initCommon } from "./common.js";
 import { apiRequest } from "./api.js";
-import { setToken } from "./auth.js";
+import { requireAuth } from "./auth.js";
 import { renderBillsTable, renderUsersTable } from "./render.js";
 
 document.addEventListener("DOMContentLoaded", () => {
+    if (!requireAuth()) return;
+
     initRouter();
     initCommon();
-
-    // ===== AUTH =====
-
-    document.getElementById("registerForm")?.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const { email, password } = e.target;
-        try {
-            const data = await apiRequest(
-                "/users/register",
-                { method: "POST", body: { email: email.value.trim(), password: password.value } },
-                false
-            );
-            alert(`Пользователь зарегистрирован. ID: ${data.id ?? data.ID ?? "неизвестен"}`);
-        } catch (err) {
-            alert("Ошибка регистрации: " + err.message);
-        }
-    });
-
-    document.getElementById("loginForm")?.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const { email, password } = e.target;
-        try {
-            const data = await apiRequest(
-                "/users/login",
-                { method: "POST", body: { email: email.value.trim(), password: password.value } },
-                false
-            );
-            const token = data.token || data.Token;
-            if (!token) throw new Error("В ответе нет поля token");
-            setToken(token);
-            alert("Успешный вход в систему.");
-        } catch (err) {
-            alert("Ошибка входа: " + err.message);
-        }
-    });
 
     // ===== BILLS =====
 

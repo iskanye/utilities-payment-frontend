@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Сервис оплаты ЖКХ</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="app-header">
+    <div class="header-content">
+        <h1>Сервис оплаты ЖКХ</h1>
+    </div>
+    <nav class="main-nav">
+        <a href="#bills" class="nav-link">Счета</a>
+        <a href="#admin" class="nav-link">Админ-панель</a>
+    </nav>
+</header>
+
+<main class="container">
+
+    <section id="page-bills" hidden>
+        <div class="card">
+            <h2>Счета</h2>
+            <p class="hint">Просматривайте и оплачивайте свои счета за коммунальные услуги.</p>
+            <div class="two-columns">
+                <div>
+                    <h3>Мои счета</h3>
+                    <button id="loadBillsBtn">Загрузить все счета</button>
+                    <div id="billsList" class="table-wrapper"></div>
+                </div>
+                <div>
+                    <h3>Поиск и оплата</h3>
+                    <form id="getBillForm" class="form-inline">
+                        <label>ID счёта<input type="number" name="id" min="1" required placeholder="Введите ID"></label>
+                        <button type="submit">Получить счёт по ID</button>
+                    </form>
+                    <div id="singleBill" class="table-wrapper"></div>
+                    <form id="payBillForm" class="form-inline">
+                        <label>ID счёта для оплаты<input type="number" name="id" min="1" required placeholder="Введите ID"></label>
+                        <button type="submit">Оплатить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="info-box">
+                <h3>Мои счета</h3>
+                <p>Нажмите «Загрузить все счета», чтобы увидеть список всех ваших счетов за коммунальные услуги.</p>
+                <h3>Поиск счёта</h3>
+                <p>Введите ID счёта, чтобы найти конкретный счёт и просмотреть его детали.</p>
+                <h3>Оплата</h3>
+                <p>Введите ID счёта, который хотите оплатить, и нажмите кнопку «Оплатить».</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="page-admin" hidden>
+        <div class="card">
+            <h2>Админ-панель</h2>
+            <div class="two-columns">
+                <div>
+                    <h3>Выставить счёт</h3>
+                    <form id="createBillForm" class="form">
+                        <label>Адрес<input type="text" name="address" required placeholder="г. Москва, ул. Пушкина, д. 1"></label>
+                        <label>Сумма<input type="number" name="amount" step="0.01" min="0" required placeholder="0.00"></label>
+                        <label>ID пользователя<input type="number" name="user_id" min="1" required placeholder="1"></label>
+                        <button type="submit">Создать счёт</button>
+                    </form>
+                </div>
+                <div>
+                    <h3>Список пользователей</h3>
+                    <button id="loadUsersBtn">Загрузить пользователей</button>
+                    <div id="usersList" class="table-wrapper"></div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="info-box">
+                <h3>Создание счёта</h3>
+                <p>Выставляйте счета пользователям за коммунальные услуги. Укажите адрес, сумму и ID пользователя.</p>
+                <h3>Управление пользователями</h3>
+                <p>Просматривайте список всех зарегистрированных пользователей и их статусы администратора.</p>
+                <h3>Важно</h3>
+                <p>Для доступа к функциям админ-панели ваш аккаунт должен иметь права администратора.</p>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer class="app-footer">
+    <div class="auth-status-footer">
+        <span class="status-label">Статус:</span>
+        <span id="authStatusText">не авторизован</span>
+        <button id="logoutBtn" class="danger" disabled>Выйти</button>
+    </div>
+</footer>
+
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>

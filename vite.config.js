@@ -1,4 +1,5 @@
 import { defineConfig } from "vite";
+import { resolve } from "path";
 
 export default defineConfig({
   server: {
@@ -9,6 +10,14 @@ export default defineConfig({
         bypass(req) {
           if (req.url?.endsWith(".html")) return req.url;
         },
+      },
+    },
+  },
+  build: {
+    rollupOptions: {
+      input: {
+        auth: resolve(process.cwd(), "index.html"),
+        app: resolve(process.cwd(), "app.html"),
       },
     },
   },

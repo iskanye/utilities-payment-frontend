@@ -1,8 +1,8 @@
-const PAGES = ["home", "auth", "bills", "admin"];
+const PAGES = ["bills", "admin"];
 
 function navigate() {
     const hash = window.location.hash.slice(1);
-    const page = PAGES.includes(hash) ? hash : "home";
+    const page = PAGES.includes(hash) ? hash : "bills";
 
     PAGES.forEach((p) => {
         const el = document.getElementById(`page-${p}`);
@@ -16,6 +16,9 @@ function navigate() {
 }
 
 export function initRouter() {
+    if (!window.location.hash) {
+        window.location.hash = "#bills";
+    }
     navigate();
     window.addEventListener("hashchange", navigate);
 }

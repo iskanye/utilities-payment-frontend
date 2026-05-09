@@ -8,15 +8,10 @@ export function initCommon() {
         if (!getToken()) return;
         try {
             await apiRequest("/users/logout", { method: "POST", body: {} }, true);
-            setToken(null);
-            alert("Вы вышли из системы.");
         } catch (err) {
-            alert("Ошибка выхода: " + err.message);
+            console.warn("Ошибка выхода:", err.message);
         }
-    });
-
-    document.getElementById("clearLogBtn")?.addEventListener("click", () => {
-        const logOutput = document.getElementById("logOutput");
-        if (logOutput) logOutput.textContent = "";
+        setToken(null);
+        window.location.href = "/";
     });
 }
