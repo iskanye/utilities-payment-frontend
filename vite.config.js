@@ -6,6 +6,8 @@ export default defineConfig(({ mode }) => {
   const backend = env.VITE_BACKEND_ENDPOINT || "http://localhost:8080";
 
   return {
+    root: ".",
+    base: "./",
     server: {
       port: 5500,
       proxy: {
