@@ -1,5 +1,3 @@
-import { log } from "./log.js";
-
 export const API_BASE = import.meta.env.DEV
     ? ""
     : (import.meta.env.VITE_BACKEND_ENDPOINT || "").replace(/\/+$/, "");
@@ -23,7 +21,7 @@ export async function apiRequest(path, options = {}, requireAuth = true) {
         fetchOptions.body = new URLSearchParams(options.body).toString();
     }
 
-    log(`→ ${fetchOptions.method} ${url}`, options.body);
+    console.log(`→ ${fetchOptions.method} ${url}`, options.body);
 
     const response = await fetch(url, fetchOptions);
 
@@ -36,7 +34,7 @@ export async function apiRequest(path, options = {}, requireAuth = true) {
     }
 
     if (!response.ok) {
-        log(`Ошибка ${response.status} ${response.statusText}`, data);
+        console.log(`Ошибка ${response.status} ${response.statusText}`, data);
         throw new Error(
             typeof data === "object" && data && data.err
                 ? data.err
@@ -44,6 +42,6 @@ export async function apiRequest(path, options = {}, requireAuth = true) {
         );
     }
 
-    log(`Успешный ответ от ${path}`, data);
+    console.log(`Успешный ответ от ${path}`, data);
     return data;
 }
