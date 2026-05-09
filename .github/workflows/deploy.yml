@@ -54,9 +54,9 @@ jobs:
           ssh -p "${{ secrets.SSH_PORT || 22 }}" \
             "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}" \
             "set -e; \
-             sudo install -m 644 /tmp/utilities-payment.nginx.conf /etc/nginx/sites-available/utilities-payment; \
-             sudo ln -sf /etc/nginx/sites-available/utilities-payment /etc/nginx/sites-enabled/utilities-payment; \
-             sudo rm -f /etc/nginx/sites-enabled/default; \
+             sudo install -d -m 755 /etc/nginx/conf.d; \
+             sudo install -m 644 /tmp/utilities-payment.nginx.conf /etc/nginx/conf.d/utilities-payment.conf; \
+             sudo rm -f /etc/nginx/conf.d/default.conf; \
              sudo nginx -t; \
              sudo systemctl reload nginx; \
              rm -f /tmp/utilities-payment.nginx.conf"
