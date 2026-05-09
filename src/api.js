@@ -1,16 +1,8 @@
 import { log } from "./log.js";
 
-export let API_BASE = localStorage.getItem("utilities_api_base") || "";
-
-export function setBaseUrl(url) {
-    API_BASE = url.replace(/\/+$/, "");
-    localStorage.setItem("utilities_api_base", API_BASE);
-
-    const apiBaseInput = document.getElementById("apiBase");
-    if (apiBaseInput) apiBaseInput.value = API_BASE;
-
-    log("Базовый URL API обновлён", API_BASE);
-}
+export const API_BASE = import.meta.env.DEV
+    ? ""
+    : (import.meta.env.VITE_BACKEND_ENDPOINT || "").replace(/\/+$/, "");
 
 export async function apiRequest(path, options = {}, requireAuth = true) {
     const url = API_BASE + path;

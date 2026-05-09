@@ -1,4 +1,5 @@
 import { apiRequest } from "./api.js";
+import { toastError } from "./toast.js";
 
 function getToken() {
     return localStorage.getItem("utilities_token");
@@ -33,15 +34,24 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("registerForm")?.addEventListener("submit", async (e) => {
         e.preventDefault();
         const { email, password } = e.target;
+        const credentials = { email: email.value.trim(), password: password.value };
         try {
-            const data = await apiRequest(
+            await apiRequest(
                 "/users/register",
-                { method: "POST", body: { email: email.value.trim(), password: password.value } },
+                { method: "POST", body: credentials },
                 false
             );
-            alert(`Пользователь зарегистрирован. ID: ${data.id ?? data.ID ?? "неизвестен"}. Теперь войдите.`);
+            const loginData = await apiRequest(
+                "/users/login",
+                { method: "POST", body: credentials },
+                false
+            );
+            const token = loginData.token || loginData.Token;
+            if (!token) throw new Error("В ответе нет поля token");
+            setToken(token);
+            goToApp();
         } catch (err) {
-            alert("Ошибка регистрации: " + err.message);
+            toastError("Ошибка регистрации: " + err.message);
         }
     });
 
@@ -59,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
             setToken(token);
             goToApp();
         } catch (err) {
-            alert("Ошибка входа: " + err.message);
+            toastError("Ошибка входа: " + err.message);
         }
     });
 });
