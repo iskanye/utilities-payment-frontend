@@ -35,6 +35,15 @@ export async function apiRequest(path, options = {}, requireAuth = true) {
 
     if (!response.ok) {
         console.log(`Ошибка ${response.status} ${response.statusText}`, data);
+
+        if (response.status === 401) {
+            localStorage.removeItem("utilities_token");
+            if (!window.location.pathname.endsWith("/index.html") &&
+                window.location.pathname !== "/") {
+                window.location.href = "/";
+            }
+        }
+
         throw new Error(
             typeof data === "object" && data && data.err
                 ? data.err
