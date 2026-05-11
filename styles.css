@@ -60,7 +60,7 @@ body {
     color: white;
 }
 
-.nav-link.active {
+.nav-link--active {
     background: rgba(255, 255, 255, 0.25);
     color: white;
     font-weight: 600;
@@ -195,19 +195,19 @@ button:disabled {
     cursor: not-allowed;
 }
 
-button.secondary {
+.button--secondary {
     background: #6b7280;
 }
 
-button.secondary:hover:not(:disabled) {
+.button--secondary:hover:not(:disabled) {
     background: #4b5563;
 }
 
-button.danger {
+.button--danger {
     background: #dc2626;
 }
 
-button.danger:hover:not(:disabled) {
+.button--danger:hover:not(:disabled) {
     background: #b91c1c;
 }
 
@@ -253,11 +253,11 @@ button.danger:hover:not(:disabled) {
     font-weight: 600;
 }
 
-#authStatusText.ok {
+#authStatusText.auth-status__text--authorized {
     color: #16a34a;
 }
 
-#authStatusText.bad {
+#authStatusText.auth-status__text--unauthorized {
     color: #dc2626;
 }
 
@@ -323,8 +323,8 @@ th {
     font-size: 13px;
 }
 
-.auth-status-footer #authStatusText.ok  { color: #16a34a; font-weight: 600; }
-.auth-status-footer #authStatusText.bad { color: #dc2626; font-weight: 600; }
+.auth-status-footer #authStatusText.auth-status__text--authorized  { color: #16a34a; font-weight: 600; }
+.auth-status-footer #authStatusText.auth-status__text--unauthorized { color: #dc2626; font-weight: 600; }
 
 .auth-status-footer #tokenPreview {
     color: #4b5563;
@@ -393,7 +393,7 @@ body.auth-page {
     box-shadow: none;
 }
 
-.auth-tab.active {
+.auth-tab--active {
     color: #fc3f1d;
     background: white;
     border-bottom-color: #fc3f1d;
@@ -720,19 +720,19 @@ body.auth-page {
     word-break: break-word;
 }
 
-.toast-visible {
+.toast--visible {
     opacity: 1;
     transform: translateX(0);
 }
 
-.toast-success {
+.toast--success {
     background: #16a34a;
 }
 
-.toast-error {
+.toast--error {
     background: #dc2626;
 }
 
-.toast-info {
+.toast--info {
     background: #fc3f1d;
 }

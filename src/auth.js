@@ -28,13 +28,13 @@ export function updateAuthUI() {
 
     if (token) {
         statusEl.textContent = "авторизован";
-        statusEl.classList.remove("bad");
-        statusEl.classList.add("ok");
+        statusEl.classList.remove("auth-status__text--unauthorized");
+        statusEl.classList.add("auth-status__text--authorized");
         logoutBtn.disabled = false;
     } else {
         statusEl.textContent = "не авторизован";
-        statusEl.classList.remove("ok");
-        statusEl.classList.add("bad");
+        statusEl.classList.remove("auth-status__text--authorized");
+        statusEl.classList.add("auth-status__text--unauthorized");
         logoutBtn.disabled = true;
     }
 }

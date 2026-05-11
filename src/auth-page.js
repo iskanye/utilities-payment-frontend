@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
     tabs.forEach((tab) => {
         tab.addEventListener("click", () => {
             const target = tab.dataset.tab;
-            tabs.forEach((t) => t.classList.toggle("active", t === tab));
+            tabs.forEach((t) => t.classList.toggle("auth-tab--active", t === tab));
             forms.forEach((f) => {
                 f.hidden = f.dataset.form !== target;
             });

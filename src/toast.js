@@ -11,14 +11,14 @@ function ensureContainer() {
 function show(message, type) {
     const root = ensureContainer();
     const el = document.createElement("div");
-    el.className = `toast toast-${type}`;
+    el.className = `toast toast--${type}`;
     el.textContent = message;
     root.appendChild(el);
 
-    requestAnimationFrame(() => el.classList.add("toast-visible"));
+    requestAnimationFrame(() => el.classList.add("toast--visible"));
 
     const remove = () => {
-        el.classList.remove("toast-visible");
+        el.classList.remove("toast--visible");
         el.addEventListener("transitionend", () => el.remove(), { once: true });
     };
 

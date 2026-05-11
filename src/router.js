@@ -11,7 +11,7 @@ function navigate() {
 
     document.querySelectorAll(".nav-link").forEach((link) => {
         const linkPage = link.getAttribute("href")?.slice(1);
-        link.classList.toggle("active", linkPage === page);
+        link.classList.toggle("nav-link--active", linkPage === page);
     });
 }
 
