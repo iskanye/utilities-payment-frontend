@@ -1,43 +1,84 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="theme-color" content="#fc3f1d">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#fc3f1d" />
     <title>Вход — Сервис оплаты ЖКХ</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body class="auth-page">
-
-<main class="auth-container">
-    <div class="auth-brand">
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="auth-page">
+    <main class="auth-container">
+      <div class="auth-brand">
         <h1>Сервис оплаты ЖКХ</h1>
-    </div>
+      </div>
 
-    <div class="auth-card">
+      <div class="auth-card">
         <div class="auth-tabs">
-            <button type="button" class="auth-tab auth-tab--active" data-tab="login">Вход</button>
-            <button type="button" class="auth-tab" data-tab="register">Регистрация</button>
+          <button
+            type="button"
+            class="auth-tab auth-tab--active"
+            data-tab="login"
+          >
+            Вход
+          </button>
+          <button type="button" class="auth-tab" data-tab="register">
+            Регистрация
+          </button>
         </div>
 
         <form id="loginForm" class="form auth-form" data-form="login">
-            <h2>С возвращением</h2>
-            <p class="hint">Войдите, чтобы управлять своими счетами.</p>
-            <label>Email<input type="email" name="email" required placeholder="example@mail.com"></label>
-            <label>Пароль<input type="password" name="password" required placeholder="Ваш пароль"></label>
-            <button type="submit" class="auth-submit">Войти</button>
+          <h2>С возвращением</h2>
+          <p class="hint">Войдите, чтобы управлять своими счетами.</p>
+          <label
+            >Email<input
+              type="email"
+              name="email"
+              required
+              placeholder="example@mail.com"
+          /></label>
+          <label
+            >Пароль<input
+              type="password"
+              name="password"
+              required
+              placeholder="Ваш пароль"
+          /></label>
+          <button type="submit" class="auth-submit">Войти</button>
         </form>
 
-        <form id="registerForm" class="form auth-form" data-form="register" hidden>
-            <h2>Создать аккаунт</h2>
-            <p class="hint">Зарегистрируйтесь, чтобы начать пользоваться сервисом.</p>
-            <label>Email<input type="email" name="email" required placeholder="example@mail.com"></label>
-            <label>Пароль<input type="password" name="password" required placeholder="Минимум 6 символов"></label>
-            <button type="submit" class="auth-submit">Зарегистрироваться</button>
+        <form
+          id="registerForm"
+          class="form auth-form"
+          data-form="register"
+          hidden
+        >
+          <h2>Создать аккаунт</h2>
+          <p class="hint">
+            Зарегистрируйтесь, чтобы начать пользоваться сервисом.
+          </p>
+          <label
+            >Email<input
+              type="email"
+              name="email"
+              required
+              placeholder="example@mail.com"
+          /></label>
+          <label
+            >Пароль<input
+              type="password"
+              name="password"
+              required
+              placeholder="Минимум 6 символов"
+          /></label>
+          <button type="submit" class="auth-submit">Зарегистрироваться</button>
         </form>
-    </div>
-</main>
+      </div>
+    </main>
 
-<script type="module" src="/src/auth-page.js"></script>
-</body>
+    <script type="module" src="/src/auth-page.js"></script>
+  </body>
 </html>
