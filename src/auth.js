@@ -21,8 +21,8 @@ export function requireAuth() {
 
 export function updateAuthUI() {
     const token = getToken();
-    const statusEl = document.getElementById("authStatusText");
-    const logoutBtn = document.getElementById("logoutBtn");
+    const statusEl = document.querySelector("#authStatusText");
+    const logoutBtn = document.querySelector("#logoutBtn");
 
     if (!statusEl || !logoutBtn) return;
 

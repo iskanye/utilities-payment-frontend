@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    document.getElementById("registerForm")?.addEventListener("submit", async (e) => {
+    document.querySelector("#registerForm")?.addEventListener("submit", async (e) => {
         e.preventDefault();
         const { email, password } = e.target;
         const credentials = { email: email.value.trim(), password: password.value };
@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    document.getElementById("loginForm")?.addEventListener("submit", async (e) => {
+    document.querySelector("#loginForm")?.addEventListener("submit", async (e) => {
         e.preventDefault();
         const { email, password } = e.target;
         try {

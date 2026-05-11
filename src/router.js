@@ -5,7 +5,7 @@ function navigate() {
     const page = PAGES.includes(hash) ? hash : "bills";
 
     PAGES.forEach((p) => {
-        const el = document.getElementById(`page-${p}`);
+        const el = document.querySelector(`#page-${p}`);
         if (el) el.hidden = p !== page;
     });
 

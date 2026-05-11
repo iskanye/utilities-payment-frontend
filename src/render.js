@@ -1,5 +1,5 @@
 export function renderBillsTable(containerId, bills) {
-    const container = document.getElementById(containerId);
+    const container = document.querySelector(`#${containerId}`);
     if (!container) return;
 
     if (!bills || bills.length === 0) {
@@ -31,7 +31,7 @@ export function renderBillsTable(containerId, bills) {
 }
 
 export function renderUsersTable(containerId, users) {
-    const container = document.getElementById(containerId);
+    const container = document.querySelector(`#${containerId}`);
     if (!container) return;
 
     if (!users || users.length === 0) {

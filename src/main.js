@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // ===== BILLS =====
 
     const clearContainer = (id) => {
-        const el = document.getElementById(id);
+        const el = document.querySelector(`#${id}`);
         if (el) el.innerHTML = "";
     };
 
@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
         renderBillsTable("billsList", bills);
     };
 
-    document.getElementById("loadBillsBtn")?.addEventListener("click", async () => {
+    document.querySelector("#loadBillsBtn")?.addEventListener("click", async () => {
         clearContainer("singleBill");
         try {
             await loadBills();
@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    document.getElementById("getBillForm")?.addEventListener("submit", async (e) => {
+    document.querySelector("#getBillForm")?.addEventListener("submit", async (e) => {
         e.preventDefault();
         const id = e.target.id.value;
         try {
@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    document.getElementById("payBillForm")?.addEventListener("submit", async (e) => {
+    document.querySelector("#payBillForm")?.addEventListener("submit", async (e) => {
         e.preventDefault();
         const id = Number(e.target.id.value);
         try {
@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ===== ADMIN =====
 
-    document.getElementById("createBillForm")?.addEventListener("submit", async (e) => {
+    document.querySelector("#createBillForm")?.addEventListener("submit", async (e) => {
         e.preventDefault();
         const { address, amount, user_id } = e.target;
         try {
@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    document.getElementById("loadUsersBtn")?.addEventListener("click", async () => {
+    document.querySelector("#loadUsersBtn")?.addEventListener("click", async () => {
         try {
             const data = await apiRequest("/admin/users", {}, true);
             renderUsersTable("usersList", Array.isArray(data) ? data : [data]);

@@ -4,7 +4,7 @@ import { apiRequest } from "./api.js";
 export function initCommon() {
     updateAuthUI();
 
-    document.getElementById("logoutBtn")?.addEventListener("click", async () => {
+    document.querySelector("#logoutBtn")?.addEventListener("click", async () => {
         if (!getToken()) return;
         try {
             await apiRequest("/users/logout", { method: "POST", body: {} }, true);
