@@ -48,6 +48,7 @@ jobs:
           ssh -p "${{ secrets.SSH_PORT || 22 }}" \
             "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}" \
             "set -e; \
+             source ~/.bashrc; \
              sudo mkdir -p /etc/ssl/utilities-payment; \
              yc certificate-manager certificate content \
                --id fpq8v14rgn8427slqnih \
