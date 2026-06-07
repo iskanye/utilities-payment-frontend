@@ -23,8 +23,7 @@ export default defineConfig(({ mode }) => {
     build: {
       rollupOptions: {
         input: {
-          auth: resolve(process.cwd(), "index.html"),
-          app: resolve(process.cwd(), "app.html"),
+          main: resolve(process.cwd(), "index.html"),
         },
       },
     },

@@ -1,17 +1,12 @@
 import { initRouter } from "./router.js";
 import { initCommon } from "./common.js";
 import { apiRequest } from "./api.js";
-import { requireAuth } from "./auth.js";
 import { renderBillsTable, renderUsersTable } from "./render.js";
 import { toastSuccess, toastError } from "./toast.js";
 
-document.addEventListener("DOMContentLoaded", () => {
-    if (!requireAuth()) return;
-
+export function initApp() {
     initRouter();
     initCommon();
-
-    // ===== BILLS =====
 
     const clearContainer = (id) => {
         const el = document.querySelector(`#${id}`);
@@ -61,8 +56,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // ===== ADMIN =====
-
     document.querySelector("#createBillForm")?.addEventListener("submit", async (e) => {
         e.preventDefault();
         const { address, amount, user_id } = e.target;
@@ -93,4 +86,4 @@ document.addEventListener("DOMContentLoaded", () => {
             toastError("Ошибка загрузки пользователей: " + err.message);
         }
     });
-});
+}

@@ -13,7 +13,7 @@ export function setToken(token) {
 
 export function requireAuth() {
     if (!getToken()) {
-        window.location.href = "/";
+        window.__navigate?.("auth");
         return false;
     }
     return true;

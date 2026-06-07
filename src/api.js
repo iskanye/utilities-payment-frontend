@@ -38,10 +38,7 @@ export async function apiRequest(path, options = {}, requireAuth = true) {
 
         if (response.status === 401) {
             localStorage.removeItem("utilities_token");
-            if (!window.location.pathname.endsWith("/index.html") &&
-                window.location.pathname !== "/") {
-                window.location.href = "/";
-            }
+            window.__navigate?.("auth");
         }
 
         throw new Error(

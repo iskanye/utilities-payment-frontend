@@ -10,10 +10,10 @@ function setToken(token) {
 }
 
 function goToApp() {
-    window.location.href = "/app.html";
+    window.__navigate("app");
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+export function initAuth() {
     if (getToken()) {
         goToApp();
         return;
@@ -72,4 +72,4 @@ document.addEventListener("DOMContentLoaded", () => {
             toastError("Ошибка входа: " + err.message);
         }
     });
-});
+}

@@ -12,6 +12,6 @@ export function initCommon() {
             console.warn("Ошибка выхода:", err.message);
         }
         setToken(null);
-        window.location.href = "/";
+        window.__navigate?.("auth");
     });
 }
