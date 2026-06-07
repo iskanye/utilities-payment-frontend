@@ -1,24 +1,12 @@
 import { apiRequest } from "./api.js";
+import { setToken } from "./auth.js";
 import { toastError } from "./toast.js";
-
-function getToken() {
-    return localStorage.getItem("utilities_token");
-}
-
-function setToken(token) {
-    localStorage.setItem("utilities_token", token);
-}
 
 function goToApp() {
     window.__navigate("app");
 }
 
 export function initAuth() {
-    if (getToken()) {
-        goToApp();
-        return;
-    }
-
     const tabs = document.querySelectorAll(".auth-tab");
     const forms = document.querySelectorAll(".auth-form");
     tabs.forEach((tab) => {
