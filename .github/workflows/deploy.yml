@@ -48,16 +48,14 @@ jobs:
           ssh -p "${{ secrets.SSH_PORT || 22 }}" \
             "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}" \
             "set -e; \
-             source ~/.bashrc; \
              sudo mkdir -p /etc/ssl/utilities-payment; \
-             yc certificate-manager certificate content \
+             ~/yandex-cloud/bin/yc certificate-manager certificate content \
                --id fpq8v14rgn8427slqnih \
                --chain /tmp/fullchain.pem \
-               --key /tmp/privkey.pem; \
+               --key /tmp/privkey.pem > /dev/null; \
              sudo install -m 644 /tmp/fullchain.pem /etc/ssl/utilities-payment/fullchain.pem; \
              sudo install -m 600 /tmp/privkey.pem /etc/ssl/utilities-payment/privkey.pem; \
-             rm -f /tmp/fullchain.pem /tmp/privkey.pem; \
-             sudo systemctl reload nginx"
+             rm -f /tmp/fullchain.pem /tmp/privkey.pem"
 
       - name: Upload nginx config
         run: |
