@@ -1,6 +1,6 @@
 export const API_BASE = import.meta.env.DEV
     ? ""
-    : (import.meta.env.VITE_BACKEND_ENDPOINT || "").replace(/\/+$/, "");
+    : (import.meta.env.VITE_BACKEND_ENDPOINT || "https://utils.caustico.ru").replace(/\/+$/, "");
 
 export async function apiRequest(path, options = {}, requireAuth = true) {
     const url = API_BASE + path;
